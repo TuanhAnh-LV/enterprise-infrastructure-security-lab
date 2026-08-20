@@ -29,14 +29,7 @@ The design places Internet-facing services in a dedicated DMZ, restricts east-we
 
 ## Security monitoring pipeline
 
-```mermaid
-flowchart LR
-    Windows[Windows endpoints] -->|Agent + event channels| Wazuh[Wazuh Manager]
-    Network[FortiGate and Cisco] -->|Syslog| Wazuh
-    Suricata[Suricata IDS] -->|eve.json| Wazuh
-    Wazuh --> Indexer[Wazuh Indexer]
-    Indexer --> Dashboard[Dashboard and triage]
-```
+<img width="1190" height="497" alt="image" src="https://github.com/user-attachments/assets/c5b1ed6e-4eca-495d-aaa9-981181712d70" />
 
 Endpoint telemetry includes process creation, network connections, PowerShell activity, authentication events, file and Registry changes, security posture, and asset inventory. Network devices contribute traffic, administrative, interface, routing, and security-event logs.
 
