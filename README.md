@@ -23,17 +23,7 @@ A segmented enterprise lab that combines resilient networking, Windows domain se
 
 ## Architecture
 
-```mermaid
-flowchart TB
-    Internet((Internet)) --> Edge[Edge switch]
-    Edge --> HA[FortiGate Active-Passive HA]
-    HA --> Core[Redundant Layer-3 core]
-    HA --> DMZ[DMZ: Nginx web server]
-    Core --> Access[Access layer]
-    Core --> Servers[Server zone: AD DS / DNS / DHCP / File]
-    Core --> SOC[SOC zone: Wazuh / Suricata]
-    Access --> Users[Office / IT / Guest endpoints]
-```
+<img width="940" height="896" alt="image" src="https://github.com/user-attachments/assets/4f829e55-04b2-4a82-a93a-16c0d16c808b" />
 
 The design places Internet-facing services in a dedicated DMZ, restricts east-west traffic with explicit firewall policy, and sends infrastructure and endpoint telemetry to the SOC zone.
 
