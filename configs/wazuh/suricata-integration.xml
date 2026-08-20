@@ -1,0 +1,14 @@
+<!-- Add to the local Wazuh agent configuration on the Suricata sensor. -->
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/suricata/eve.json</location>
+</localfile>
+
+<!--
+  Validation:
+  1. Confirm Suricata is writing current JSON events to eve.json.
+  2. Confirm the Wazuh agent account can read the file.
+  3. Restart the Wazuh agent after validating XML syntax.
+  4. Generate benign DNS or HTTP traffic and search by sensor hostname/time.
+-->
+

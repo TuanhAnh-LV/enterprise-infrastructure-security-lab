@@ -1,0 +1,30 @@
+<Sysmon schemaversion="4.82">
+  <!-- Balanced lab telemetry. Tune before use on high-volume systems. -->
+  <HashAlgorithms>sha256</HashAlgorithms>
+  <CheckRevocation>true</CheckRevocation>
+  <DnsLookup>false</DnsLookup>
+
+  <EventFiltering>
+    <!-- Empty exclude blocks collect all matching event types in this small lab. -->
+    <ProcessCreate onmatch="exclude" />
+    <NetworkConnect onmatch="exclude" />
+    <DnsQuery onmatch="exclude" />
+
+    <!-- Focus file telemetry on locations used for authorized validation. -->
+    <FileCreate onmatch="include">
+      <TargetFilename condition="begin with">C:\SOC-Lab\</TargetFilename>
+      <TargetFilename condition="contains">\Downloads\</TargetFilename>
+      <TargetFilename condition="contains">\AppData\Local\Temp\</TargetFilename>
+      <TargetFilename condition="contains">\Start Menu\Programs\Startup\</TargetFilename>
+    </FileCreate>
+
+    <!-- Monitor common auto-start and service locations. -->
+    <RegistryEvent onmatch="include">
+      <TargetObject condition="contains">\Software\Microsoft\Windows\CurrentVersion\Run</TargetObject>
+      <TargetObject condition="contains">\Software\Microsoft\Windows\CurrentVersion\RunOnce</TargetObject>
+      <TargetObject condition="contains">\Software\Microsoft\Windows NT\CurrentVersion\Winlogon</TargetObject>
+      <TargetObject condition="contains">\System\CurrentControlSet\Services\</TargetObject>
+    </RegistryEvent>
+  </EventFiltering>
+</Sysmon>
+
