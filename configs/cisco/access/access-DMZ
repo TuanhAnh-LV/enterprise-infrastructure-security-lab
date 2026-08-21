@@ -1,1 +1,53 @@
+! Cisco IOS-style lab reference template
+! Interface names and feature syntax vary by virtual image and release.
+! Replace placeholders only in a private working copy.
 
+hostname ACCESS-DMZ
+no ip domain-lookup
+spanning-tree mode rapid-pvst
+
+username admin privilege 15 secret password
+crypto key generate rsa modulus 2048
+ip ssh version 2
+line vty 0 4
+ transport input ssh
+ login local
+ exec-timeout 10 0
+!
+vlan 70
+ name DMZ
+!
+! ---------------------- Access-to-FGT access --------------------------------
+interface Ethernet0/0
+ description TO-FGT02
+ switchport mode access
+ switchport access vlan 70
+ spanning-tree portfast
+ no shutdown
+
+!
+interface Ethernet0/1
+ description TO-FGT01
+ switchport mode access
+ switchport access vlan 70
+ spanning-tree portfast
+ no shutdown
+!
+! ---------------------- Endpoint-facing access port --------------------------
+interface Ethernet0/2
+ description DMZ_WEB_SERVER
+ switchport mode access
+ switchport access vlan 70
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ no shutdown
+!
+interface Vlan70
+ description SWITCH-DMZ-MANAGEMENT
+ ip address 10.60.70.12 255.255.255.0
+ no shutdown
+!
+ip defaut-gateway 10.60.70.1
+!
+end
+write memory
